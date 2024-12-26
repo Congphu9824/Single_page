@@ -101,7 +101,22 @@ a, .btn-link {
 code {
     color: #c02d76;
 }
+.e-activecolor {/*color status
+*/
+    color: green;
+}
 
+.e-inactivecolor {
+    color: red;
+}
+
+.statustemp {
+    font-weight: bold;
+}
+
+.statustxt {
+    font-size: 14px;
+}
 
 /*css mainlayout*/
 

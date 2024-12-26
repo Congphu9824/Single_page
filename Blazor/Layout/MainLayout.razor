@@ -1,9 +1,10 @@
 ﻿@inherits LayoutComponentBase
-
-<div id="header" style="height:55px;text-align: center;color:white; background-color:#1ABC9C; ">
-    Header
+@inject NavigationManager _NavigationManager
+<div id="header" style="height:55px; display: flex; justify-content: center; align-items: center; color: white; background-color: #1ABC9C; font-size: 20px;">
+    Welcome to Smart Software
 </div>
-<SfSidebar @ref="sidebarObj" Width="220px" DockSize="72px" EnableDock=true @bind-IsOpen="SidebarToggle">
+
+<SfSidebar @ref="sidebarObj" Width="220px" DockSize="72px" EnableDock="true" @bind-IsOpen="SidebarToggle">
     <ChildContent>
         <div class="dock">
             <ul>
@@ -12,40 +13,54 @@
                     <span class="e-text" title="menu">Menu</span>
                 </li>
                 <li class="sidebar-item">
-                    <span class="e-icons home"></span>
-                    <span class="e-text" title="home">Home</span>
+                    <SfButton CssClass="e-inherit" IconCss="e-icons e-home" Content="Home" OnClick="@(() => NavigateToPage("/home"))" />
                 </li>
                 <li class="sidebar-item">
-                    <span class="e-icons profile"></span>
-                    <span class="e-text" title="profile">Profile</span>
+                    <SfButton CssClass="e-inherit" IconCss="e-icons e-user" Content="Profile" OnClick="@(() => NavigateToPage("/GetIndexAll"))" />
                 </li>
                 <li class="sidebar-item">
-                    <span class="e-icons info"></span>
-                    <span class="e-text" title="info">Info</span>
+                    <SfButton CssClass="e-inherit" IconCss="e-icons e-location" Content="Note" OnClick="@(() => NavigateToPage("/GetNote"))" />
                 </li>
                 <li class="sidebar-item">
-                    <span class="e-icons settings"></span>
-                    <span class="e-text" title="settings">Settings</span>
+                    <SfButton CssClass="e-inherit" IconCss="e-icons e-settings" Content="Settings" OnClick="@(() => NavigateToPage("/settings"))" />
                 </li>
             </ul>
         </div>
     </ChildContent>
 </SfSidebar>
 
-<div id="main-content container-fluid col-md-12" style="margin-top: 10%;">
-    <div class="title default" style="text-align: center">Main content</div>
+<div class="">
     <main>@Body</main>
 </div>
 
 @code {
     SfSidebar sidebarObj;
     public bool SidebarToggle = false;
+
     public void Toggle()
     {
         SidebarToggle = !SidebarToggle;
     }
+
+    void NavigateToPage(string page)
+    {
+        _NavigationManager.NavigateTo(page);
+    }
 }
+
 <style>
+  
+    
+    .dock a {
+        text-decoration: none;
+        color: white; /* Giữ màu chữ trắng */
+    }
+
+    .dock a:hover {
+        text-decoration: underline; /* Có thể thêm hiệu ứng underline khi hover nếu muốn */
+    }
+
+
     /* Content area styles */
     .title {
         font-size: 20px;

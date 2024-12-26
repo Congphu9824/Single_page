@@ -1,0 +1,31 @@
+﻿@page "/GetNote"
+@using Data.Model
+
+<h3>Get Note</h3>
+
+<div class="col-lg-12 control-section">
+	<div class="content-wrapper">
+		<div class="row">
+			<SfGrid DataSource="@GridData"
+					AllowFiltering="true"
+					AllowPaging="true"
+					AllowSorting="true"
+					Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel", "Print", "PdfExport", "ExcelExport", "Search" })"
+					Height="350px;"
+					ContextMenuItems="@(new List<object>() {"Copy", "Edit", "Delete", "Save", "Cancel","PdfExport",})">
+				<GridEvents TValue="Note" OnActionBegin="OnActionBeginHandler"></GridEvents>
+				<GridFilterSettings Type="FilterType.Excel"></GridFilterSettings>
+				<GridPageSettings PageSize="5"></GridPageSettings>
+				<GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" Mode="EditMode.Dialog" ShowDeleteConfirmDialog="true"></GridEditSettings>
+				<GridColumns>
+					<GridColumn Field=@nameof(Note.Text) HeaderText="Text" TextAlign="TextAlign.None" Width=""></GridColumn>
+					<GridColumn Field=@nameof(Note.DateCreated) HeaderText="Date Created" Format="d" Width=""></GridColumn>
+				</GridColumns>
+			</SfGrid>
+		</div>
+	</div>
+</div>
+
+@code {
+
+}

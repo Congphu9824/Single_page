@@ -1,0 +1,168 @@
+﻿@page "/GetIndexAll"
+
+@using Data.Model
+@inject NavigationManager _NavigationManager
+
+<h3>List Staffs</h3>
+
+<SfGrid DataSource="GridData" @ref="GridRef"
+		AllowFiltering="true"
+		AllowPaging="true"
+		AllowSorting="true"
+		AllowSelection="true"
+		AllowPdfExport="true" 
+		AllowExcelExport="true"
+		Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel", "Print", "PdfExport", "ExcelExport", "Search" })"
+		Height="350px;"
+		ContextMenuItems="@(new List<object>() {"SortAscending", "SortDescending","Copy", "Edit", "Delete", "Save", "Cancel","PdfExport", "ExcelExport", "CsvExport"})">
+	<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+	<GridEvents TValue="Staff" OnToolbarClick="ToolbarClickhandle"></GridEvents>
+	<GridFilterSettings Type="FilterType.Excel"></GridFilterSettings>
+	<GridPageSettings PageSize="5"></GridPageSettings>
+	<GridSelectionSettings CheckboxOnly="true" PersistSelection="true"></GridSelectionSettings>
+	<GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" Mode="EditMode.Normal" ShowDeleteConfirmDialog="true">
+		@* <Template>
+			@{
+				var Staff = (context as Staff);
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+							<div class="row">
+								<div class="form-group col-md-4">
+									<label>First Name</label>
+									<SfTextBox FloatLabelType="FloatLabelType.Always" @bind-Value="@(Staff.FirstName)"></SfTextBox>
+								</div>
+								<div class="form-group col-md-4">
+									<label>Last Name</label>
+									<SfTextBox FloatLabelType="FloatLabelType.Always" @bind-Value="@(Staff.LastName)"></SfTextBox>
+								</div>
+								<div class="form-group col-md-4">
+									<label>Nick Name</label>
+									<SfTextBox FloatLabelType="FloatLabelType.Always" @bind-Value="@(Staff.NickName)"></SfTextBox>
+								</div>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="row">
+								<div class="form-group col-md-4">
+									<label>Place</label>
+									<SfTextBox FloatLabelType="FloatLabelType.Always" @bind-Value="@(Staff.Place)"></SfTextBox>
+								</div>
+								<div class="form-group col-md-4">
+									<label>Salary</label>
+									<SfNumericTextBox FloatLabelType="FloatLabelType.Always" @bind-Value="@(Staff.Salary)"></SfNumericTextBox>
+								</div>
+								<div class="form-group col-md-4">
+									<label>Gender</label>
+									<Syncfusion.Blazor.DropDowns.SfDropDownList DataSource="@(new List<string> { "Male", "Female" })" @bind-Value="@(Staff.Gender)" FloatLabelType="FloatLabelType.Always" />
+								</div>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="row">
+								<div class="form-group col-md-4">
+									<label>Position</label>
+									<Syncfusion.Blazor.DropDowns.SfDropDownList DataSource="@(new List<string> {"Developer", "Designer", "Manager", "tester"})" @bind-Value="@(Staff.Position)" FloatLabelType="FloatLabelType.Always"></Syncfusion.Blazor.DropDowns.SfDropDownList>
+								</div>
+								<div class="form-group col-md-4">
+									<label>Status</label>
+									<Syncfusion.Blazor.DropDowns.SfDropDownList DataSource="@(new List<string> {"Active", "Inactive"})" @bind-Value="@(Staff.Status)" FloatLabelType="FloatLabelType.Always"></Syncfusion.Blazor.DropDowns.SfDropDownList>
+								</div>
+								<div class="form-group col-md-4">
+									<label>DateOfBirth</label>
+									<SfDatePicker FloatLabelType="FloatLabelType.Always" @bind-Value="@(Staff.DateOfBirth)"></SfDatePicker>
+								</div>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="row">
+								<div class="form-group col-md-4">
+									<label>DateCreated</label>
+									<SfDatePicker FloatLabelType="FloatLabelType.Always" @bind-Value="@(Staff.DateCreated)"></SfDatePicker>
+								</div>
+								<div class="form-group col-md-4">
+									<label>DateUpdated</label>
+									<SfDatePicker FloatLabelType="FloatLabelType.Always" @bind-Value="@(Staff.DateUpdated)"></SfDatePicker>
+								</div>
+								<div class="form-group col-md-4">
+									<label>Notes</label><br />
+									<SfTextArea Placeholder="Enter your comments" RowCount="4" ColumnCount="60"></SfTextArea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			}
+		</Template> *@
+	</GridEditSettings>
+	<GridColumns>
+		<GridColumn Field="@nameof(Staff.FirstName)" HeaderText="First Name" EditType="EditType.DefaultEdit" TextAlign="TextAlign.None" Width="150"></GridColumn>
+		<GridColumn Field="@nameof(Staff.LastName)" HeaderText="Last Name" EditType="EditType.DefaultEdit" TextAlign="TextAlign.None" Width="150"></GridColumn>
+		<GridColumn Field="@nameof(Staff.NickName)" HeaderText="Nick Name" EditType="EditType.DefaultEdit" TextAlign="TextAlign.None" Width="150"></GridColumn>
+		<GridColumn Field="@nameof(Staff.Place)" HeaderText="Place" EditType="EditType.DefaultEdit" TextAlign="TextAlign.None" Width="100"></GridColumn>
+		<GridColumn Field="@nameof(Staff.Gender)" HeaderText="Gender" EditType="EditType.DropDownEdit" Width="140" TextAlign="TextAlign.None"></GridColumn>
+		<GridColumn Field="@nameof(Staff.Position)" HeaderText="Position" EditType="EditType.DropDownEdit" Width="140" TextAlign="TextAlign.None"></GridColumn>
+		<GridColumn Field="@nameof(Staff.Status)" HeaderText="Status" EditType="EditType.DropDownEdit" Width="140" TextAlign="TextAlign.None">
+			<Template>
+				@{
+					var Staff = (context as Staff);
+					if (Staff.Status == "Active")
+					{
+						<div class="statustemp e-activecolor">
+							<span class="statustxt e-activecolor">@Staff.Status</span>
+						</div>
+					}
+					else
+					{
+						<div class="statustemp e-inactivecolor">
+							<span class="statustxt e-inactivecolor">@Staff.Status</span>
+						</div>
+					}
+				}
+			</Template>
+		</GridColumn>
+		<GridColumn Field="@nameof(Staff.Salary)" HeaderText="Salary" EditType="EditType.NumericEdit" Format="C2" TextAlign="TextAlign.None" Width="140"></GridColumn>
+		<GridColumn Field="@nameof(Staff.DateOfBirth)" HeaderText="DateOfBirth" EditType="EditType.DatePickerEdit" Format="d" Type="ColumnType.Date" TextAlign="TextAlign.None" Width="130"></GridColumn>
+		<GridColumn Field="@nameof(Staff.DateCreated)" HeaderText="DateCreated" EditType="EditType.DatePickerEdit" Format="d" Type="ColumnType.Date" TextAlign="TextAlign.None" Width="130"></GridColumn>
+		<GridColumn Field="@nameof(Staff.DateUpdated)" HeaderText="DateUpdated" EditType="EditType.DatePickerEdit" Format="d" Type="ColumnType.Date" TextAlign="TextAlign.None" Width="130"></GridColumn>
+		<GridColumn Type="ColumnType.CheckBox" Width="50"></GridColumn>
+	</GridColumns>
+	<GridAggregates>
+		<GridAggregate>
+			<GridAggregateColumns>
+				<GridAggregateColumn Field="@nameof(Staff.Salary)" Type="AggregateType.Sum" Format="C2">
+					<FooterTemplate>
+						@{
+							var Staff = (context as AggregateTemplateContext);
+							<div class="text-right">
+								Total: @Staff.Sum
+							</div>
+						}
+					</FooterTemplate>
+				</GridAggregateColumn>
+			</GridAggregateColumns>
+		</GridAggregate>
+		<GridAggregate>
+			<GridAggregateColumns>
+				<GridAggregateColumn Field="@nameof(Staff.Salary)" Type="AggregateType.Average" Format="C2">
+					<FooterTemplate>
+						@{
+							var Staff = (context as AggregateTemplateContext);
+							<div class="text-right">
+								Average: @Staff.Average
+							</div>
+						}
+					</FooterTemplate>
+				</GridAggregateColumn>
+			</GridAggregateColumns>
+		</GridAggregate>
+	</GridAggregates>
+</SfGrid>
+
+
+
+
+
+@code {
+
+}
