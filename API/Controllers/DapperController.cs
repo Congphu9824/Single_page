@@ -1,4 +1,6 @@
-﻿using API.Repositories;
+﻿using System.Reflection.Metadata;
+using API.Repositories;
+using Data.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,19 +31,20 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost("CreateAll")]
-        public async Task<IActionResult> Create(object entity)
+        [HttpDelete("{tableName}/{id}")]
+        public async Task<IActionResult> DeleteData(string tableName, Guid id)
         {
             try
             {
-                _IrepStaffStore.AddAsync(entity);
-
+                var Parameter = "UsingDelete";
+                var param = new { parameter =  Parameter, tablename = tableName, @KeyData = id };
+                var result = await _IrepStaffStore.GetListObjectAsync<object>("DeleteData", param);
+                return Ok(result);
             }
             catch (Exception ex) 
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Internal server error: {ex.Message}");
             }
-            return Ok();    
         }
     }
 }

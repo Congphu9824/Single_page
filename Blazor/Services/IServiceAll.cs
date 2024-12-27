@@ -1,5 +1,7 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json;
 using Data.Model;
+using Newtonsoft.Json;
 using static System.Net.WebRequestMethods;
 
 namespace Blazor.Services
@@ -8,23 +10,29 @@ namespace Blazor.Services
     {
         Task<List<Staff>> GetAll();
         Task<List<Note>> GetNotes();
-
-        Task<Note> CreateNote(Note note);
+        
+        //
+        Task DeleteNote(Guid id);
+        Task  DeleteStaff(Guid id);
     }
 
     public class ServiceAll( HttpClient http) : IServiceAll
     {
-        public async Task<Note> CreateNote(Note note)
+        public async Task DeleteNote(Guid id)
         {
-            var response = await http.PostAsJsonAsync("api/Dapper/CreateAll?tablename=notes", note);
+            var response = await http.DeleteAsync($"api/Dapper/notes/{id}");
             if (response.IsSuccessStatusCode)
             {
-                var createdNote = await response.Content.ReadFromJsonAsync<Note>();
-                return createdNote;
+                 await http.GetFromJsonAsync<List<Note>>("api/Dapper/getData?tableName=notes");
             }
-            else
+        }
+
+        public async Task DeleteStaff(Guid id)
+        {
+            HttpResponseMessage response = await http.DeleteAsync($"api/Dapper/Staffs/{id}");
+            if (response.IsSuccessStatusCode)
             {
-                throw new Exception($"Error: {response.StatusCode}");
+                 await http.GetFromJsonAsync<List<Staff>>("api/Dapper/getData?tableName=Staffs");
             }
         }
 

@@ -16,7 +16,7 @@
 		Height="350px;"
 		ContextMenuItems="@(new List<object>() {"SortAscending", "SortDescending","Copy", "Edit", "Delete", "Save", "Cancel","PdfExport", "ExcelExport", "CsvExport"})">
 	<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
-	<GridEvents TValue="Staff" OnToolbarClick="ToolbarClickhandle"></GridEvents>
+	<GridEvents TValue="Staff" OnActionBegin="OnActionBeginHandler" OnToolbarClick="ToolbarClickhandle"></GridEvents>
 	<GridFilterSettings Type="FilterType.Excel"></GridFilterSettings>
 	<GridPageSettings PageSize="5"></GridPageSettings>
 	<GridSelectionSettings CheckboxOnly="true" PersistSelection="true"></GridSelectionSettings>
@@ -96,6 +96,7 @@
 		</Template> *@
 	</GridEditSettings>
 	<GridColumns>
+		<GridColumn Field=@nameof(Staff.Id) HeaderText="Date Created" Format="d" IsPrimaryKey="true" Visible="false"></GridColumn>
 		<GridColumn Field="@nameof(Staff.FirstName)" HeaderText="First Name" EditType="EditType.DefaultEdit" TextAlign="TextAlign.None" Width="150"></GridColumn>
 		<GridColumn Field="@nameof(Staff.LastName)" HeaderText="Last Name" EditType="EditType.DefaultEdit" TextAlign="TextAlign.None" Width="150"></GridColumn>
 		<GridColumn Field="@nameof(Staff.NickName)" HeaderText="Nick Name" EditType="EditType.DefaultEdit" TextAlign="TextAlign.None" Width="150"></GridColumn>

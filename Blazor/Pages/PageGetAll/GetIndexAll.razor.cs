@@ -3,6 +3,7 @@ using Data.Model;
 using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Navigations;
+using static System.Net.WebRequestMethods;
 
 namespace Blazor.Pages.PageGetAll
 {
@@ -12,6 +13,7 @@ namespace Blazor.Pages.PageGetAll
         public Guid Id { get; set; }
 
         [Inject] public IServiceAll _serviceAll { get; set; } = null!;
+        
 
         private List<Staff> GridData { get; set; } = new List<Staff>();
         private Staff Staff = new Staff();
@@ -20,6 +22,23 @@ namespace Blazor.Pages.PageGetAll
         protected override async Task OnInitializedAsync()
         {
             GridData = await _serviceAll.GetAll();
+        }
+
+        private async void OnActionBeginHandler(ActionEventArgs<Staff> args)
+        {
+            if (args.Action == "Delete")
+            {
+                var DataDelete = args.Data.Id;
+                if (DataDelete != null)
+                {
+                    await DeleteStaff(DataDelete);
+                }
+            }
+        }
+  
+        private async Task DeleteStaff(Guid id)
+        {
+            await _serviceAll.DeleteStaff(id);
         }
 
         private async Task ToolbarClickhandle(ClickEventArgs args)

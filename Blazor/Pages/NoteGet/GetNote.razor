@@ -18,6 +18,7 @@
 				<GridPageSettings PageSize="5"></GridPageSettings>
 				<GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" Mode="EditMode.Dialog" ShowDeleteConfirmDialog="true"></GridEditSettings>
 				<GridColumns>
+					<GridColumn Field=@nameof(Note.Id) HeaderText="Date Created" Format="d" IsPrimaryKey="true" Visible="false"></GridColumn>
 					<GridColumn Field=@nameof(Note.Text) HeaderText="Text" TextAlign="TextAlign.None" Width=""></GridColumn>
 					<GridColumn Field=@nameof(Note.DateCreated) HeaderText="Date Created" Format="d" Width=""></GridColumn>
 				</GridColumns>

@@ -11,19 +11,12 @@ namespace API.Repositories
     {
         Task<List<T>> GetListObjectAsync<T>(string storeName);
         Task<List<T>> GetListObjectAsync<T>(string storeName, object value);
-        Task AddAsync( object entity);
 
     }
 
     public class RepStaffStore(IConfiguration _configuration, StaffDbContext _db) : IRepStaffStore
     {
         private readonly string connStr = _configuration.GetConnectionString("DefaultConnection");
-
-        public async Task AddAsync(object entity)
-        {
-            await _db.AddAsync(entity);
-            await _db.SaveChangesAsync();
-        }
 
         public async Task<List<T>> GetListObjectAsync<T>(string storeName)
         {
