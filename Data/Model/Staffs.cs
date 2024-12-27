@@ -9,7 +9,7 @@ using Data.Enum;
 
 namespace Data.Model
 {
-    public class Staff
+    public class Staffs
     {
         [Key]
         public Guid Id { get; set; }
@@ -27,7 +27,7 @@ namespace Data.Model
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public DateTime? DateUpdated { get; set; } = DateTime.Now;
         public DateTime? DateDeleted { get; set; } = DateTime.Now;
-        public ICollection<Note>? notes { get; set; }
+        public ICollection<Notes>? notes { get; set; }
 
     }
 }

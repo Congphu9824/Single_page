@@ -16,11 +16,11 @@
 		Height="350px;"
 		ContextMenuItems="@(new List<object>() {"SortAscending", "SortDescending","Copy", "Edit", "Delete", "Save", "Cancel","PdfExport", "ExcelExport", "CsvExport"})">
 	<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
-	<GridEvents TValue="Staff" OnActionBegin="OnActionBeginHandler" OnToolbarClick="ToolbarClickhandle"></GridEvents>
+	<GridEvents TValue="Staffs" OnActionBegin="OnActionBeginHandler" OnToolbarClick="ToolbarClickhandle"></GridEvents>
 	<GridFilterSettings Type="FilterType.Excel"></GridFilterSettings>
 	<GridPageSettings PageSize="5"></GridPageSettings>
 	<GridSelectionSettings CheckboxOnly="true" PersistSelection="true"></GridSelectionSettings>
-	<GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" Mode="EditMode.Normal" ShowDeleteConfirmDialog="true">
+	<GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" Mode="EditMode.Dialog" ShowDeleteConfirmDialog="true">
 		@* <Template>
 			@{
 				var Staff = (context as Staff);
@@ -96,18 +96,17 @@
 		</Template> *@
 	</GridEditSettings>
 	<GridColumns>
-		<GridColumn Field=@nameof(Staff.Id) HeaderText="Date Created" Format="d" IsPrimaryKey="true" Visible="false"></GridColumn>
+		<GridColumn Field=@nameof(Staff.Id) HeaderText="Id" Format="d" IsPrimaryKey="true" Visible="false"></GridColumn>
 		<GridColumn Field="@nameof(Staff.FirstName)" HeaderText="First Name" EditType="EditType.DefaultEdit" TextAlign="TextAlign.None" Width="150"></GridColumn>
 		<GridColumn Field="@nameof(Staff.LastName)" HeaderText="Last Name" EditType="EditType.DefaultEdit" TextAlign="TextAlign.None" Width="150"></GridColumn>
 		<GridColumn Field="@nameof(Staff.NickName)" HeaderText="Nick Name" EditType="EditType.DefaultEdit" TextAlign="TextAlign.None" Width="150"></GridColumn>
 		<GridColumn Field="@nameof(Staff.Place)" HeaderText="Place" EditType="EditType.DefaultEdit" TextAlign="TextAlign.None" Width="100"></GridColumn>
-		<GridColumn Field="@nameof(Staff.Gender)" HeaderText="Gender" EditType="EditType.DropDownEdit" Width="140" TextAlign="TextAlign.None"></GridColumn>
-		<GridColumn Field="@nameof(Staff.Position)" HeaderText="Position" EditType="EditType.DropDownEdit" Width="140" TextAlign="TextAlign.None"></GridColumn>
-		<GridColumn Field="@nameof(Staff.Status)" HeaderText="Status" EditType="EditType.DropDownEdit" Width="140" TextAlign="TextAlign.None">
-			<Template>
+		<GridColumn Field="@nameof(Staff.Gender)" HeaderText="Gender" EditType="EditType.DefaultEdit" Width="140" TextAlign="TextAlign.None"></GridColumn>
+@* 		<GridColumn Field="@nameof(Staff.Position)" HeaderText="Position" EditType="EditType.DefaultEdit" Width="140" TextAlign="TextAlign.None"></GridColumn>
+ *@		<GridColumn Field="@nameof(Staff.Status)" HeaderText="Status" EditType="EditType.DefaultEdit" Width="140" TextAlign="TextAlign.None">
+			@* <Template>
 				@{
-					var Staff = (context as Staff);
-					if (Staff.Status == "Active")
+					var Staff = (context as StafStaffs					if (Staff.Status == "Active")
 					{
 						<div class="statustemp e-activecolor">
 							<span class="statustxt e-activecolor">@Staff.Status</span>
@@ -120,7 +119,7 @@
 						</div>
 					}
 				}
-			</Template>
+			</Template> *@
 		</GridColumn>
 		<GridColumn Field="@nameof(Staff.Salary)" HeaderText="Salary" EditType="EditType.NumericEdit" Format="C2" TextAlign="TextAlign.None" Width="140"></GridColumn>
 		<GridColumn Field="@nameof(Staff.DateOfBirth)" HeaderText="DateOfBirth" EditType="EditType.DatePickerEdit" Format="d" Type="ColumnType.Date" TextAlign="TextAlign.None" Width="130"></GridColumn>

@@ -1,5 +1,7 @@
 ﻿using System.Reflection.Metadata;
 using API.Repositories;
+using API.Services;
+using Data.DTO;
 using Data.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +13,11 @@ namespace API.Controllers
     public class DapperController : ControllerBase
     {
         private readonly IRepStaffStore _IrepStaffStore;
-        public DapperController(IRepStaffStore repStaffStore)
+        private readonly IDataService _IDataService;
+        public DapperController(IRepStaffStore repStaffStore, IDataService dataService)
         {
-            _IrepStaffStore = repStaffStore;    
+            _IrepStaffStore = repStaffStore;
+            _IDataService = dataService;
         }
 
         [HttpGet("getData")]
@@ -25,7 +29,7 @@ namespace API.Controllers
                 var result = await _IrepStaffStore.GetListObjectAsync<object>("GetData", param);
                 return Ok(result);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Internal server error: {ex.Message}");
             }
@@ -37,14 +41,47 @@ namespace API.Controllers
             try
             {
                 var Parameter = "UsingDelete";
-                var param = new { parameter =  Parameter, tablename = tableName, @KeyData = id };
+                var param = new { parameter = Parameter, tablename = tableName, @KeyData = id };
                 var result = await _IrepStaffStore.GetListObjectAsync<object>("DeleteData", param);
                 return Ok(result);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Internal server error: {ex.Message}");
             }
         }
+
+
+        [HttpPost("CreateData")]
+        public async Task<IActionResult> CreateData(DapperContext dto)
+        {
+
+            var result = await _IDataService.CreateData(dto.EntityType, dto.JsonData);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return NotFound(new { Message = "No data added" });
+            }
+        }
+
+        [HttpPut("EditData")]
+        public async Task<IActionResult> EditData(DapperContext dto)
+        {
+
+            var result = await _IDataService.UpdateData(dto.EntityType, dto.JsonData);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return NotFound(new { Message = "No data added" });
+            }
+        }
     }
 }
+
+

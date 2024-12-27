@@ -1,4 +1,6 @@
-﻿using Blazor.Services;
+﻿using System.Text.Json;
+using Blazor.Services;
+using Data.DTO;
 using Data.Model;
 using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Grids;
@@ -15,16 +17,16 @@ namespace Blazor.Pages.PageGetAll
         [Inject] public IServiceAll _serviceAll { get; set; } = null!;
         
 
-        private List<Staff> GridData { get; set; } = new List<Staff>();
-        private Staff Staff = new Staff();
-        SfGrid<Staff> GridRef;
+        private List<Staffs> GridData { get; set; } = new List<Staffs>();
+        private Staffs Staff = new Staffs();
+        SfGrid<Staffs> GridRef;
 
         protected override async Task OnInitializedAsync()
         {
             GridData = await _serviceAll.GetAll();
         }
 
-        private async void OnActionBeginHandler(ActionEventArgs<Staff> args)
+        private async void OnActionBeginHandler(ActionEventArgs<Staffs> args)
         {
             if (args.Action == "Delete")
             {
@@ -32,6 +34,20 @@ namespace Blazor.Pages.PageGetAll
                 if (DataDelete != null)
                 {
                     await DeleteStaff(DataDelete);
+                }
+            }
+            else if(args.Action == "Add")
+            {
+                var jsonData = JsonSerializer.Serialize(args.Data);
+                var request = new DapperContext()
+                {
+                    EntityType = "Staffs",
+                    JsonData = jsonData
+                };
+                var result = await _serviceAll.CreateData(request);
+                if (result)
+                {
+                    await GridRef.Refresh();
                 }
             }
         }

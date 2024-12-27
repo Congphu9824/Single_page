@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(StaffDbContext))]
-    [Migration("20241226091246_Store5")]
-    partial class Store5
+    [Migration("20241227085435_hi")]
+    partial class hi
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Data.Model.Note", b =>
+            modelBuilder.Entity("Data.Model.Notes", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,19 +45,19 @@ namespace API.Migrations
 
                     b.HasIndex("StaffId");
 
-                    b.ToTable("notes");
+                    b.ToTable("Notes");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("fbe6317c-1439-48fc-8f69-9b8fbf9a8e48"),
-                            DateCreated = new DateTime(2024, 12, 26, 16, 12, 45, 101, DateTimeKind.Local).AddTicks(9315),
+                            Id = new Guid("4178b3e7-72d1-43bc-b1c7-b8b4cfcc5af5"),
+                            DateCreated = new DateTime(2024, 12, 27, 15, 54, 35, 255, DateTimeKind.Local).AddTicks(6626),
                             Text = "Welcome Note"
                         },
                         new
                         {
-                            Id = new Guid("ed66bc23-56d9-4c13-90ba-917b2ca55c82"),
-                            DateCreated = new DateTime(2024, 12, 26, 16, 12, 45, 101, DateTimeKind.Local).AddTicks(9316),
+                            Id = new Guid("1e4739ac-b5c4-47bd-a41f-9b0eaa0eb06d"),
+                            DateCreated = new DateTime(2024, 12, 27, 15, 54, 35, 255, DateTimeKind.Local).AddTicks(6628),
                             Text = "Take note"
                         });
                 });
@@ -117,11 +117,11 @@ namespace API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a745ece2-e2db-43be-a24b-18c7647ed7b6"),
-                            DateCreated = new DateTime(2024, 12, 26, 16, 12, 45, 101, DateTimeKind.Local).AddTicks(9196),
-                            DateDeleted = new DateTime(2024, 12, 26, 16, 12, 45, 101, DateTimeKind.Local).AddTicks(9208),
+                            Id = new Guid("0fd42793-abd9-498c-babf-fef8dca8a0c1"),
+                            DateCreated = new DateTime(2024, 12, 27, 15, 54, 35, 255, DateTimeKind.Local).AddTicks(6515),
+                            DateDeleted = new DateTime(2024, 12, 27, 15, 54, 35, 255, DateTimeKind.Local).AddTicks(6525),
                             DateOfBirth = new DateTime(1990, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(2024, 12, 26, 16, 12, 45, 101, DateTimeKind.Local).AddTicks(9205),
+                            DateUpdated = new DateTime(2024, 12, 27, 15, 54, 35, 255, DateTimeKind.Local).AddTicks(6522),
                             FirstName = "John",
                             Gender = "Male",
                             LastName = "Doe",
@@ -134,11 +134,11 @@ namespace API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("1a56d2a4-8213-4fd7-9ff4-4c22ba14d854"),
-                            DateCreated = new DateTime(2024, 12, 26, 16, 12, 45, 101, DateTimeKind.Local).AddTicks(9233),
-                            DateDeleted = new DateTime(2024, 12, 26, 16, 12, 45, 101, DateTimeKind.Local).AddTicks(9234),
+                            Id = new Guid("85ccb8ee-aa51-4294-8b7d-bdfcc726c373"),
+                            DateCreated = new DateTime(2024, 12, 27, 15, 54, 35, 255, DateTimeKind.Local).AddTicks(6540),
+                            DateDeleted = new DateTime(2024, 12, 27, 15, 54, 35, 255, DateTimeKind.Local).AddTicks(6540),
                             DateOfBirth = new DateTime(1985, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(2024, 12, 26, 16, 12, 45, 101, DateTimeKind.Local).AddTicks(9234),
+                            DateUpdated = new DateTime(2024, 12, 27, 15, 54, 35, 255, DateTimeKind.Local).AddTicks(6540),
                             FirstName = "Jane",
                             Gender = "Female",
                             LastName = "Smith",
@@ -151,11 +151,11 @@ namespace API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a009d280-4ab1-4c75-9fab-af15f5f97a2a"),
-                            DateCreated = new DateTime(2024, 12, 26, 16, 12, 45, 101, DateTimeKind.Local).AddTicks(9237),
-                            DateDeleted = new DateTime(2024, 12, 26, 16, 12, 45, 101, DateTimeKind.Local).AddTicks(9237),
+                            Id = new Guid("2b10409f-2710-48ac-a730-ac8c39e2f543"),
+                            DateCreated = new DateTime(2024, 12, 27, 15, 54, 35, 255, DateTimeKind.Local).AddTicks(6543),
+                            DateDeleted = new DateTime(2024, 12, 27, 15, 54, 35, 255, DateTimeKind.Local).AddTicks(6543),
                             DateOfBirth = new DateTime(1990, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(2024, 12, 26, 16, 12, 45, 101, DateTimeKind.Local).AddTicks(9237),
+                            DateUpdated = new DateTime(2024, 12, 27, 15, 54, 35, 255, DateTimeKind.Local).AddTicks(6543),
                             FirstName = "John",
                             Gender = "",
                             LastName = "Doe",
@@ -168,11 +168,11 @@ namespace API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ca0df4c8-9389-4240-9270-391a80ab98e6"),
-                            DateCreated = new DateTime(2024, 12, 26, 16, 12, 45, 101, DateTimeKind.Local).AddTicks(9239),
-                            DateDeleted = new DateTime(2024, 12, 26, 16, 12, 45, 101, DateTimeKind.Local).AddTicks(9240),
+                            Id = new Guid("37c03f7f-1be7-4ab1-9442-33d976d78021"),
+                            DateCreated = new DateTime(2024, 12, 27, 15, 54, 35, 255, DateTimeKind.Local).AddTicks(6552),
+                            DateDeleted = new DateTime(2024, 12, 27, 15, 54, 35, 255, DateTimeKind.Local).AddTicks(6553),
                             DateOfBirth = new DateTime(1987, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(2024, 12, 26, 16, 12, 45, 101, DateTimeKind.Local).AddTicks(9239),
+                            DateUpdated = new DateTime(2024, 12, 27, 15, 54, 35, 255, DateTimeKind.Local).AddTicks(6553),
                             FirstName = "Alice",
                             Gender = "",
                             LastName = "Johnson",
@@ -185,11 +185,11 @@ namespace API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f4ee3099-1d30-4719-aba0-0aa597dc8893"),
-                            DateCreated = new DateTime(2024, 12, 26, 16, 12, 45, 101, DateTimeKind.Local).AddTicks(9242),
-                            DateDeleted = new DateTime(2024, 12, 26, 16, 12, 45, 101, DateTimeKind.Local).AddTicks(9242),
+                            Id = new Guid("9ba5e402-3ea3-450d-b287-6a98755075f8"),
+                            DateCreated = new DateTime(2024, 12, 27, 15, 54, 35, 255, DateTimeKind.Local).AddTicks(6555),
+                            DateDeleted = new DateTime(2024, 12, 27, 15, 54, 35, 255, DateTimeKind.Local).AddTicks(6555),
                             DateOfBirth = new DateTime(1992, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(2024, 12, 26, 16, 12, 45, 101, DateTimeKind.Local).AddTicks(9242),
+                            DateUpdated = new DateTime(2024, 12, 27, 15, 54, 35, 255, DateTimeKind.Local).AddTicks(6555),
                             FirstName = "Bob",
                             Gender = "",
                             LastName = "Brown",
@@ -202,7 +202,7 @@ namespace API.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Data.Model.Note", b =>
+            modelBuilder.Entity("Data.Model.Notes", b =>
                 {
                     b.HasOne("Data.Model.Staff", "Staff")
                         .WithMany("notes")

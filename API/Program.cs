@@ -1,6 +1,8 @@
 using API.ApplicationDbContext;
 using API.Repositories;
+using API.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,7 @@ builder.Services.AddDbContext<StaffDbContext>(option =>
 });
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IRepStaffStore, RepStaffStore>();
+builder.Services.AddScoped<IDataService, Dataservice>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
