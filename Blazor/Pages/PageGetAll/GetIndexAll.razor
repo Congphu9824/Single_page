@@ -3,34 +3,44 @@
 @using Data.Model
 @inject NavigationManager _NavigationManager
 
-<h3>List Staffs</h3>
-
+@* Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel", "Print", "PdfExport", "ExcelExport" })" *@
 <SfGrid DataSource="GridData" @ref="GridRef"
-		AllowFiltering="true"
-		AllowPaging="true"
-		AllowSorting="true"
-		AllowSelection="true"
-		AllowPdfExport="true" 
-		AllowExcelExport="true"
-		Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel", "Print", "PdfExport", "ExcelExport", "Search" })"
-		Height="350px;"
-		ContextMenuItems="@(new List<object>() {"SortAscending", "SortDescending","Copy", "Edit", "Delete", "Save", "Cancel","PdfExport", "ExcelExport", "CsvExport"})">
+AllowFiltering="true"
+AllowPaging="true"
+AllowSorting="true"
+AllowSelection="true"
+AllowPdfExport="true" 
+AllowExcelExport="true"
+
+Height="350px;"
+ContextMenuItems="@(new List<object>() {"SortAscending", "SortDescending","Copy", "Edit", "Delete", "Save", "Cancel","PdfExport", "ExcelExport", "CsvExport"})">
 	<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
 	<GridEvents TValue="Staffs" OnActionBegin="OnActionBeginHandler" OnToolbarClick="ToolbarClickhandle"></GridEvents>
 	<GridFilterSettings Type="FilterType.Excel"></GridFilterSettings>
 	<GridPageSettings PageSize="5"></GridPageSettings>
+	<GridTemplates>
+		<ToolbarTemplate>
+			<SfToolbar>
+				<ToolbarEvents Clicked="ToolbarClickHandler"></ToolbarEvents>
+				<ToolbarItems>
+					<ToolbarItem Type="@ItemType.Button" Align="ItemAlign.Right" PrefixIcon="e-chevron-up icon" Id="Add" Text="Add"></ToolbarItem>
+					@* <ToolbarItem Type="@ItemType.Button" PrefixIcon="e-chevron-down icon" Id="ExpandAll" Text="Expand All"></ToolbarItem> *@
+				</ToolbarItems>
+			</SfToolbar>
+		</ToolbarTemplate>
+	</GridTemplates>
 	<GridSelectionSettings CheckboxOnly="true" PersistSelection="true"></GridSelectionSettings>
 	<GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" Mode="EditMode.Dialog" ShowDeleteConfirmDialog="true">
-		@* <Template>
+		<Template>
 			@{
-				var Staff = (context as Staff);
+				var Staff = (context as Staffs);
 				<div class="container">
 					<div class="row">
 						<div class="col-12">
 							<div class="row">
 								<div class="form-group col-md-4">
-									<label>First Name</label>
-									<SfTextBox FloatLabelType="FloatLabelType.Always" @bind-Value="@(Staff.FirstName)"></SfTextBox>
+									// <label>First Name</label>
+									<SfTextBox FloatLabelType="FloatLabelType.Always" Placeholder="First Name" @bind-Value="@(Staff.FirstName)"></SfTextBox>
 								</div>
 								<div class="form-group col-md-4">
 									<label>Last Name</label>
@@ -54,7 +64,10 @@
 								</div>
 								<div class="form-group col-md-4">
 									<label>Gender</label>
-									<Syncfusion.Blazor.DropDowns.SfDropDownList DataSource="@(new List<string> { "Male", "Female" })" @bind-Value="@(Staff.Gender)" FloatLabelType="FloatLabelType.Always" />
+									<Syncfusion.Blazor.DropDowns.SfDropDownList DataSource="@(new List<string> { "Male", "Female" })"
+									@bind-Value="Staff.Gender"
+									FloatLabelType="FloatLabelType.Always">
+									</Syncfusion.Blazor.DropDowns.SfDropDownList>
 								</div>
 							</div>
 						</div>
@@ -62,11 +75,17 @@
 							<div class="row">
 								<div class="form-group col-md-4">
 									<label>Position</label>
-									<Syncfusion.Blazor.DropDowns.SfDropDownList DataSource="@(new List<string> {"Developer", "Designer", "Manager", "tester"})" @bind-Value="@(Staff.Position)" FloatLabelType="FloatLabelType.Always"></Syncfusion.Blazor.DropDowns.SfDropDownList>
+									<Syncfusion.Blazor.DropDowns.SfDropDownList DataSource="@(new List<string> {"Developer", "Designer", "Manager", "tester"})"
+									@bind-Value="@(Staff.Position)"
+									FloatLabelType="FloatLabelType.Always">
+									</Syncfusion.Blazor.DropDowns.SfDropDownList>
 								</div>
 								<div class="form-group col-md-4">
 									<label>Status</label>
-									<Syncfusion.Blazor.DropDowns.SfDropDownList DataSource="@(new List<string> {"Active", "Inactive"})" @bind-Value="@(Staff.Status)" FloatLabelType="FloatLabelType.Always"></Syncfusion.Blazor.DropDowns.SfDropDownList>
+									<Syncfusion.Blazor.DropDowns.SfDropDownList DataSource="@(new List<string> {"Active", "Inactive"})"
+									@bind-Value="@(Staff.Status)"
+									FloatLabelType="FloatLabelType.Always">
+									</Syncfusion.Blazor.DropDowns.SfDropDownList>
 								</div>
 								<div class="form-group col-md-4">
 									<label>DateOfBirth</label>
@@ -93,7 +112,7 @@
 					</div>
 				</div>
 			}
-		</Template> *@
+		</Template>
 	</GridEditSettings>
 	<GridColumns>
 		<GridColumn Field=@nameof(Staff.Id) HeaderText="Id" Format="d" IsPrimaryKey="true" Visible="false"></GridColumn>
@@ -101,25 +120,27 @@
 		<GridColumn Field="@nameof(Staff.LastName)" HeaderText="Last Name" EditType="EditType.DefaultEdit" TextAlign="TextAlign.None" Width="150"></GridColumn>
 		<GridColumn Field="@nameof(Staff.NickName)" HeaderText="Nick Name" EditType="EditType.DefaultEdit" TextAlign="TextAlign.None" Width="150"></GridColumn>
 		<GridColumn Field="@nameof(Staff.Place)" HeaderText="Place" EditType="EditType.DefaultEdit" TextAlign="TextAlign.None" Width="100"></GridColumn>
-		<GridColumn Field="@nameof(Staff.Gender)" HeaderText="Gender" EditType="EditType.DefaultEdit" Width="140" TextAlign="TextAlign.None"></GridColumn>
-@* 		<GridColumn Field="@nameof(Staff.Position)" HeaderText="Position" EditType="EditType.DefaultEdit" Width="140" TextAlign="TextAlign.None"></GridColumn>
- *@		<GridColumn Field="@nameof(Staff.Status)" HeaderText="Status" EditType="EditType.DefaultEdit" Width="140" TextAlign="TextAlign.None">
-			@* <Template>
+		<GridColumn Field="@nameof(Staff.Gender)" HeaderText="Gender" EditType="EditType.DropDownEdit" Width="140" TextAlign="TextAlign.None"></GridColumn>
+		@* 		<GridColumn Field="@nameof(Staff.Position)" HeaderText="Position" EditType="EditType.DefaultEdit" Width="140" TextAlign="TextAlign.None"></GridColumn>
+ *@		<GridColumn Field="@nameof(Staff.Status)" HeaderText="Status" EditType="EditType.DropDownEdit" Width="140" TextAlign="TextAlign.None">
+			<Template>
 				@{
-					var Staff = (context as StafStaffs					if (Staff.Status == "Active")
+					var Staff = (context as Staffs);
+					if (Staff.Status == "Active")
 					{
-						<div class="statustemp e-activecolor">
-							<span class="statustxt e-activecolor">@Staff.Status</span>
+						<div class="title-temp2 active">
+							<span class="completed-font">@Staff.Status</span>
 						</div>
 					}
 					else
 					{
-						<div class="statustemp e-inactivecolor">
-							<span class="statustxt e-inactivecolor">@Staff.Status</span>
+						<div class="title-temp2 inactive">
+							<span class="inprogress-font">@Staff.Status</span>
 						</div>
 					}
 				}
-			</Template> *@
+
+			</Template>
 		</GridColumn>
 		<GridColumn Field="@nameof(Staff.Salary)" HeaderText="Salary" EditType="EditType.NumericEdit" Format="C2" TextAlign="TextAlign.None" Width="140"></GridColumn>
 		<GridColumn Field="@nameof(Staff.DateOfBirth)" HeaderText="DateOfBirth" EditType="EditType.DatePickerEdit" Format="d" Type="ColumnType.Date" TextAlign="TextAlign.None" Width="130"></GridColumn>
@@ -159,10 +180,33 @@
 	</GridAggregates>
 </SfGrid>
 
+<style>
+	/* For Active status */
+	.title-temp2.active {
+		background-color:aquamarine /* Blue background */;
+		
+		border-radius: 5px;
+	}
 
+		.title-temp2.active .completed-font {
+			color: green; /* Green text for active status */
+		}
 
+	/* For Inactive status */
+	.title-temp2.inactive {
+		background-color: gray; /* Gray background */
 
+		border-radius: 5px;
+	}
 
-@code {
+		.title-temp2.inactive .inprogress-font {
+			color: red; /* Red text for inactive status */
+		}
 
-}
+	.e-grid .e-rowcell {
+	
+		padding: 2px;
+	
+	}
+
+</style>

@@ -15,7 +15,6 @@ namespace Blazor.Pages.PageGetAll
         public Guid Id { get; set; }
 
         [Inject] public IServiceAll _serviceAll { get; set; } = null!;
-        
 
         private List<Staffs> GridData { get; set; } = new List<Staffs>();
         private Staffs Staff = new Staffs();
@@ -50,8 +49,32 @@ namespace Blazor.Pages.PageGetAll
                     await GridRef.Refresh();
                 }
             }
+            else if(args.Action == "Edit")
+            {
+                var JsonData = JsonSerializer.Serialize(args.Data);
+                var request = new DapperContext()
+                {
+                    EntityType = "Staffs",
+                    JsonData = JsonData
+                };
+                var result = _serviceAll.UpdateData(request);
+                if (result.IsCompletedSuccessfully)
+                {
+                    await GridRef.Refresh();
+                }
+            }
         }
-  
+        public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+        {
+            if (args.Item.Text == "Add")
+            {
+              await  this.GridRef.AddRecordAsync();
+            }
+            //if (args.Item.Text == "Expand All")
+            //{
+            //  await  this.GridRef.ExpandAllGroupAsync();
+            //}
+        }
         private async Task DeleteStaff(Guid id)
         {
             await _serviceAll.DeleteStaff(id);
