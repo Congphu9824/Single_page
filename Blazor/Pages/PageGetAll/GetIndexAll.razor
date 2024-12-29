@@ -2,16 +2,13 @@
 
 @using Data.Model
 @inject NavigationManager _NavigationManager
-
 @* Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel", "Print", "PdfExport", "ExcelExport" })" *@
 <SfGrid DataSource="GridData" @ref="GridRef"
 AllowFiltering="true"
 AllowPaging="true"
 AllowSorting="true"
 AllowSelection="true"
-AllowPdfExport="true" 
-AllowExcelExport="true"
-
+Toolbar="@(new List<string>() { "Search" })"
 Height="350px;"
 ContextMenuItems="@(new List<object>() {"SortAscending", "SortDescending","Copy", "Edit", "Delete", "Save", "Cancel","PdfExport", "ExcelExport", "CsvExport"})">
 	<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
@@ -23,14 +20,16 @@ ContextMenuItems="@(new List<object>() {"SortAscending", "SortDescending","Copy"
 			<SfToolbar>
 				<ToolbarEvents Clicked="ToolbarClickHandler"></ToolbarEvents>
 				<ToolbarItems>
-					<ToolbarItem Type="@ItemType.Button" Align="ItemAlign.Right" PrefixIcon="e-chevron-up icon" Id="Add" Text="Add"></ToolbarItem>
-					@* <ToolbarItem Type="@ItemType.Button" PrefixIcon="e-chevron-down icon" Id="ExpandAll" Text="Expand All"></ToolbarItem> *@
+					<ToolbarItem Type="@ItemType.Button" Align="ItemAlign.Right" PrefixIcon="e-plus icon" Id="Add" Text="Add"></ToolbarItem>
+					<ToolbarItem Type="@ItemType.Button" Align="ItemAlign.Right" PrefixIcon="e-edit icon" Id="Edit" Text="Edit"></ToolbarItem>
+					<ToolbarItem Type="@ItemType.Button" Align="ItemAlign.Right" PrefixIcon="e-trash icon" Id="Delete" Text="Delete"></ToolbarItem>
+					<ToolbarItem Type="@ItemType.Button" Align="ItemAlign.Left" PrefixIcon="e-search icon" Id="Search" Text="Search"></ToolbarItem>
 				</ToolbarItems>
 			</SfToolbar>
 		</ToolbarTemplate>
 	</GridTemplates>
 	<GridSelectionSettings CheckboxOnly="true" PersistSelection="true"></GridSelectionSettings>
-	<GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" Mode="EditMode.Dialog" ShowDeleteConfirmDialog="true">
+	<GridEditSettings  AllowAdding="true" AllowEditing="true" AllowDeleting="true" Mode="EditMode.Dialog" ShowDeleteConfirmDialog="true" >
 		<Template>
 			@{
 				var Staff = (context as Staffs);
@@ -146,7 +145,6 @@ ContextMenuItems="@(new List<object>() {"SortAscending", "SortDescending","Copy"
 		<GridColumn Field="@nameof(Staff.DateOfBirth)" HeaderText="DateOfBirth" EditType="EditType.DatePickerEdit" Format="d" Type="ColumnType.Date" TextAlign="TextAlign.None" Width="130"></GridColumn>
 		<GridColumn Field="@nameof(Staff.DateCreated)" HeaderText="DateCreated" EditType="EditType.DatePickerEdit" Format="d" Type="ColumnType.Date" TextAlign="TextAlign.None" Width="130"></GridColumn>
 		<GridColumn Field="@nameof(Staff.DateUpdated)" HeaderText="DateUpdated" EditType="EditType.DatePickerEdit" Format="d" Type="ColumnType.Date" TextAlign="TextAlign.None" Width="130"></GridColumn>
-		<GridColumn Type="ColumnType.CheckBox" Width="50"></GridColumn>
 	</GridColumns>
 	<GridAggregates>
 		<GridAggregate>
@@ -194,8 +192,7 @@ ContextMenuItems="@(new List<object>() {"SortAscending", "SortDescending","Copy"
 
 	/* For Inactive status */
 	.title-temp2.inactive {
-		background-color: gray; /* Gray background */
-
+		background-color: #f3f61a;
 		border-radius: 5px;
 	}
 

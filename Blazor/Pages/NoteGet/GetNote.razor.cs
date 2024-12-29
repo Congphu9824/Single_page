@@ -7,6 +7,8 @@ using System.Text.Json;
 using static System.Net.WebRequestMethods;
 using Syncfusion.Blazor.Grids.Internal;
 using System.Net.Http.Json;
+using Syncfusion.Blazor.Lists;
+using Syncfusion.Blazor.Navigations;
 
 
 namespace Blazor.Pages.NoteGet
@@ -21,6 +23,7 @@ namespace Blazor.Pages.NoteGet
         private List<Notes> GridData { get; set; } = new List<Notes>();
         public Notes Note;
         SfGrid<Notes> SfGrid;
+        private string SearchText { get; set; } = string.Empty;
 
         protected override async Task OnInitializedAsync()
         {
@@ -66,7 +69,28 @@ namespace Blazor.Pages.NoteGet
                 }
             }
         }
-   
+
+        public async Task ToolBarClickHandle(ClickEventArgs args)
+        {
+            if (args.Item.Text == "Add")
+            {
+                await SfGrid.AddRecordAsync();
+            }
+            else if(args.Item.Text == "edit")
+            {
+                await SfGrid.StartEditAsync();
+            }
+            else if (args.Item.Text == "delete")
+            {
+                await SfGrid.DeleteRecordAsync();
+            }
+            else if( args.Item.Text == "Search")
+            {
+                await SfGrid.SearchAsync(args.Name);
+            }
+        }
+
+
         public async Task DeleteNote(Guid id)
         {
             await _serviceAll.DeleteNote(id);

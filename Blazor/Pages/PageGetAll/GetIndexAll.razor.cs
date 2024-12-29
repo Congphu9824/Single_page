@@ -70,10 +70,14 @@ namespace Blazor.Pages.PageGetAll
             {
               await  this.GridRef.AddRecordAsync();
             }
-            //if (args.Item.Text == "Expand All")
-            //{
-            //  await  this.GridRef.ExpandAllGroupAsync();
-            //}
+            else if(args.Item.Text == "edit")
+            {
+                await this.GridRef.StartEditAsync();
+            }
+            else if (args.Item.Text == "delete")
+            {
+                await GridRef.DeleteRecordAsync();
+            }
         }
         private async Task DeleteStaff(Guid id)
         {

@@ -10,12 +10,30 @@
 					AllowFiltering="true"
 					AllowPaging="true"
 					AllowSorting="true"
-					Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel", "Print", "PdfExport", "ExcelExport", })"
+					@ref="SfGrid"
 					Height="350px;"
 					ContextMenuItems="@(new List<object>() {"Copy", "Edit", "Delete", "Save", "Cancel","PdfExport",})">
 				<GridEvents TValue="Notes" OnActionBegin="OnActionBeginHandler"></GridEvents>
 				<GridFilterSettings Type="FilterType.Excel"></GridFilterSettings>
 				<GridPageSettings PageSize="5"></GridPageSettings>
+				<GridTemplates>
+					<ToolbarTemplate>
+						<SfToolbar>
+							<ToolbarEvents Clicked="ToolBarClickHandle"></ToolbarEvents>
+							<ToolbarItems>
+								<ToolbarItem Type="@ItemType.Button" Align="ItemAlign.Right" PrefixIcon="e-plus icon" Id="Add" Text="Add"></ToolbarItem>
+								<ToolbarItem Type="@ItemType.Button" Align="ItemAlign.Right" PrefixIcon="e-edit icon" Id="Edit" Text="edit"></ToolbarItem>
+								<ToolbarItem Type="@ItemType.Button" Align="ItemAlign.Right" PrefixIcon="e-delete icon" Id="Delete" Text="delete"></ToolbarItem>
+								<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+									<Template >
+										<SfTextBox  Placeholder="Enter values to search"></SfTextBox>
+										<span class="e-search-icon e-icons"></span>
+									</Template>
+								</ToolbarItem>
+							</ToolbarItems>
+						</SfToolbar>
+					</ToolbarTemplate>
+				</GridTemplates>
 				<GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" Mode="EditMode.Dialog" ShowDeleteConfirmDialog="true"></GridEditSettings>
 				<GridColumns>
 					<GridColumn Field=@nameof(Note.Id) HeaderText="Date Created" Format="d" IsPrimaryKey="true" Visible="false"></GridColumn>
